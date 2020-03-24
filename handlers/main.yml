@@ -1,0 +1,16 @@
+# Standards: 0.1
+---
+- name: Kill cyberduck
+  command: killall Cyberduck
+  register: cyberduck_kill
+  failed_when: cyberduck_kill.rc != 0 and "No matching processes belonging to you were found" not in cyberduck_kill.stderr
+  become: "{{ (cyberduck_user != ansible_user_id) | bool }}"
+  become_user: "{{ cyberduck_user }}"
+
+- name: Start cyberduck
+  when: cyberduck_started
+  command: open -g /Applications/Cyberduck.app
+  become: "{{ (cyberduck_user != ansible_user_id) | bool }}"
+  become_user: "{{ cyberduck_user }}"
+
+...

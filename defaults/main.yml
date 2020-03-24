@@ -1,0 +1,10 @@
+# Standards: 0.1
+---
+# @var cyberduck_user:description: User to run user-specific commands
+# @var cyberduck_user:value: cyberduck_user | default(homebrew_user) | default(ansible_user_id)
+# cyberduck_user:
+
+# @var cyberduck_started:description: Start in background after install
+cyberduck_started: True
+
+...

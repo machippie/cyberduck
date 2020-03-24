@@ -1,0 +1,31 @@
+# Standards: 0.1
+---
+- name: Fact cyberduck user
+  set_fact:
+    cyberduck_user: "{{ cyberduck_user | default(homebrew_user) | default(ansible_user_id) }}"
+  tags:
+    - cyberduck
+
+- become: "{{ (cyberduck_user != ansible_user_id) | bool }}"
+  become_user: "{{ cyberduck_user }}"
+  block:
+    - name: Install required package
+      ignore_errors: True
+      homebrew_cask:
+        name: cyberduck
+        greedy: True
+        options: appdir=/Applications
+        accept_external_apps: False
+        state: upgraded
+      tags:
+        - cyberduck
+
+- name: Remove quarantine flag
+  register: cyberduck_quarantine
+  failed_when: cyberduck_quarantine.rc != 0 and "No such xattr" not in cyberduck_quarantine.stderr
+  changed_when: cyberduck_quarantine.rc == 0
+  command: xattr -d com.apple.quarantine /Applications/Cyberduck.app
+  tags:
+    - cyberduck
+
+...
