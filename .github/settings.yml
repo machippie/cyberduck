@@ -1,8 +1,8 @@
 ---
 repository:
-  name: multimc
-  description: Ansible role for multimc
-  homepage: https://machippie.github.io/multimc/
+  name: cyberduck
+  description: Ansible role for cyberduck
+  homepage: https://machippie.github.io/cyberduck/
   topics: ansible, role, ansible-role
 
   private: false
